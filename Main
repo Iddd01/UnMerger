@@ -1,0 +1,21 @@
+Private Sub WriteUnmerge(ByVal Rng As Range)
+    Dim Cel As Range, MerRng As Range
+    Application.ScreenUpdating = False
+    For Each Cel In Rng
+        If Cel.MergeCells Then
+            Set MerRng = Cel.MergeArea
+            MerRng.UnMerge
+            MerRng.Value = Cel.Value
+        End If
+    Next
+    Application.ScreenUpdating = True
+End Sub
+Sub Main()
+    Dim InputRng As Range
+    On Error Resume Next
+    Set InputRng = Application.InputBox("Chon vùng bo merge: ", "Chon vùng", Selection.Address, Type:=8)
+    On Error GoTo 0
+    If Not InputRng Is Nothing Then
+        WriteUnmerge InputRng
+    End If
+End Sub
